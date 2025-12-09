@@ -380,9 +380,50 @@ curl -X POST http://localhost:5000/api/ai/chat \
 - Input validation
 - CORS configuration
 
+## 🚀 Vercel Deployment
+
+### Frontend Deployment
+
+The project includes `vercel.json` configuration for easy deployment on Vercel.
+
+**Deployment Steps:**
+
+1. **Connect Repository to Vercel:**
+   - Go to [Vercel Dashboard](https://vercel.com/dashboard)
+   - Click "Add New Project"
+   - Import your GitHub repository
+
+2. **Configure Build Settings:**
+   - **Root Directory:** `frontend` (or leave empty if using root `vercel.json`)
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+   - **Install Command:** `npm install`
+
+3. **Add Environment Variables:**
+   Add all `VITE_*` variables in Vercel dashboard:
+   ```
+   VITE_API_BASE_URL=https://your-backend-url.com/api
+   VITE_FIREBASE_API_KEY=your-firebase-key
+   VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+   VITE_FIREBASE_PROJECT_ID=your-project-id
+   VITE_FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+   VITE_FIREBASE_APP_ID=your-app-id
+   VITE_GOOGLE_API_KEY=your-google-api-key
+   VITE_ADMIN_EMAILS=admin1@example.com,admin2@example.com
+   ```
+
+4. **Deploy:**
+   - Click "Deploy"
+   - Vercel will automatically build and deploy your app
+
+**Note:** The `vercel.json` file includes SPA routing configuration to handle React Router routes correctly.
+
 ## 📚 Documentation
 
 - **Docker Guide**: [DOCKER_GUIDE.md](./DOCKER_GUIDE.md) - Complete Docker setup and usage guide
+- **Docker Commands**: [DOCKER_COMMANDS.md](./DOCKER_COMMANDS.md) - Quick reference for Docker commands
 - **Database Diagram**: `database_diagram.dbml` (view on dbdiagram.io)
 - **Class Diagram**: `class_diagram.puml` (view with PlantUML)
 
