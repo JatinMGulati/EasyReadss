@@ -1,0 +1,393 @@
+@startuml EasyReads Class Diagram
+
+!define BACKEND_COLOR #E1F5FF
+!define FRONTEND_COLOR #FFF4E1
+!define MODEL_COLOR #E8F5E9
+!define COMPONENT_COLOR #F3E5F5
+
+package "Backend (Node.js/Express)" BACKEND_COLOR {
+  
+  package "Models" MODEL_COLOR {
+    class BookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +String amazon_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class EBookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +String amazon_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class AudiobookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String narrator
+      +String image_link
+      +String amazon_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class FictionBookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class ScienceBookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class BiographyBookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class FantasyBookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class HistoryBookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class TechnologyBookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class RomanceBookSchema {
+      +String name
+      +String ISBN {unique}
+      +String author
+      +String image_link
+      +Date createdAt
+      +Date updatedAt
+    }
+    
+    class BookRequestSchema {
+      +String bookName
+      +String author
+      +String ISBN
+      +String requestedBy
+      +String requestedByUid
+      +String status {enum: pending, approved, rejected}
+      +String adminNotes
+      +Date requestedAt
+      +Date updatedAt
+    }
+  }
+  
+  package "Routes" {
+    class BookRoutes {
+      +GET /api/books()
+      +GET /api/books/:id()
+      +POST /api/books()
+      +PUT /api/books/:id()
+      +PATCH /api/books/:id()
+      +DELETE /api/books/:id()
+      +GET /api/fiction()
+      +GET /api/science()
+      +GET /api/biography()
+      +GET /api/fantasy()
+      +GET /api/history()
+      +GET /api/technology()
+      +GET /api/romance()
+      +GET /api/ebooks()
+      +GET /api/audiobooks()
+    }
+    
+    class BookRequestRoutes {
+      +GET /api/book-requests()
+      +GET /api/book-requests/:id()
+      +GET /api/book-requests/user/:uid()
+      +POST /api/book-requests()
+      +PUT /api/book-requests/:id()
+      +PATCH /api/book-requests/:id/status()
+      +DELETE /api/book-requests/:id()
+    }
+    
+    class AuthRoutes {
+      +GET /api/auth/verify()
+      +GET /api/auth/user()
+    }
+    
+    class AdminRoutes {
+      +GET /api/admin/users()
+      +GET /api/admin/user/:uid()
+    }
+  }
+  
+  package "Middleware" {
+    class ConnectionMiddleware {
+      +connectToDB()
+    }
+    
+    class AuthMiddleware {
+      +verifyToken()
+      +getUserInfo()
+    }
+  }
+  
+  class Server {
+    +app: Express
+    +PORT: Number
+    +useRoutes()
+    +listen()
+  }
+}
+
+package "Frontend (React)" FRONTEND_COLOR {
+  
+  package "Pages" {
+    class Home {
+      +render()
+    }
+    
+    class Books {
+      +books: Array
+      +selectedCategory: String
+      +fetchBooks()
+      +handleCategoryChange()
+    }
+    
+    class DigitalBooks {
+      +ebooks: Array
+      +audiobooks: Array
+      +fetchDigitalContent()
+      +loadMoreEBooks()
+      +loadMoreAudiobooks()
+    }
+    
+    class Requests {
+      +requests: Array
+      +showForm: Boolean
+      +formData: Object
+      +fetchRequests()
+      +handleSubmit()
+    }
+    
+    class Login {
+      +email: String
+      +password: String
+      +handleSubmit()
+    }
+    
+    class Signup {
+      +email: String
+      +password: String
+      +username: String
+      +handleSubmit()
+    }
+    
+    class Admin {
+      +activeTab: String
+      +requests: Array
+      +books: Array
+      +selectedCollection: String
+      +fetchRequests()
+      +updateRequestStatus()
+      +fetchBooks()
+      +handleBookSubmit()
+      +handleEditBook()
+      +handleDeleteBook()
+    }
+  }
+  
+  package "Components" COMPONENT_COLOR {
+    class Navbar {
+      +currentUser: Object
+      +userIsAdmin: Boolean
+      +handleLogout()
+    }
+    
+    class Footer {
+      +render()
+    }
+    
+    class BookCard {
+      +book: Object
+      +type: String
+      +handlePreview()
+    }
+    
+    class Categories {
+      +categories: Array
+      +handleCategoryClick()
+    }
+    
+    class Recommendations {
+      +recommendations: Array
+      +fetchRecommendations()
+      +shuffleArray()
+    }
+    
+    class HorizontalScrollSection {
+      +title: String
+      +fetchUrl: String
+      +type: String
+      +books: Array
+      +fetchBooks()
+    }
+    
+    class GoogleBooksSection {
+      +title: String
+      +type: String
+      +books: Array
+      +fetchBooks()
+    }
+    
+    class RootRedirect {
+      +redirect()
+    }
+  }
+  
+  package "Contexts" {
+    class AuthContext {
+      +currentUser: Object
+      +signup()
+      +login()
+      +logout()
+    }
+  }
+  
+  package "Utils" {
+    class AdminUtils {
+      +isAdmin(email): Boolean
+      +getAdminEmails(): Array
+    }
+  }
+  
+  class App {
+    +routes: Routes
+    +PrivateRoute()
+    +AdminRoute()
+    +RootRedirect()
+  }
+}
+
+package "External Services" {
+  class FirebaseAuth {
+    +createUserWithEmailAndPassword()
+    +signInWithEmailAndPassword()
+    +signOut()
+    +onAuthStateChanged()
+  }
+  
+  class GoogleBooksAPI {
+    +volumes?q=filter=ebooks
+    +volumes?q=subject:audiobooks
+  }
+  
+  class MongoDB {
+    +books collection
+    +ebooks collection
+    +audiobooks collection
+    +category collections
+    +bookrequests collection
+  }
+}
+
+' Relationships
+BookRoutes --> BookSchema : uses
+BookRoutes --> EBookSchema : uses
+BookRoutes --> AudiobookSchema : uses
+BookRoutes --> FictionBookSchema : uses
+BookRoutes --> ScienceBookSchema : uses
+BookRoutes --> BiographyBookSchema : uses
+BookRoutes --> FantasyBookSchema : uses
+BookRoutes --> HistoryBookSchema : uses
+BookRoutes --> TechnologyBookSchema : uses
+BookRoutes --> RomanceBookSchema : uses
+
+BookRequestRoutes --> BookRequestSchema : uses
+
+Server --> BookRoutes : uses
+Server --> BookRequestRoutes : uses
+Server --> AuthRoutes : uses
+Server --> AdminRoutes : uses
+Server --> ConnectionMiddleware : uses
+
+AuthRoutes --> AuthMiddleware : uses
+AdminRoutes --> AuthMiddleware : uses
+
+Home --> Navbar : contains
+Home --> Footer : contains
+Home --> Categories : contains
+Home --> Recommendations : contains
+Home --> HorizontalScrollSection : contains
+Home --> GoogleBooksSection : contains
+
+Books --> Navbar : contains
+Books --> Footer : contains
+Books --> BookCard : contains
+
+DigitalBooks --> Navbar : contains
+DigitalBooks --> Footer : contains
+
+Requests --> Navbar : contains
+Requests --> Footer : contains
+
+Admin --> Navbar : contains
+Admin --> Footer : contains
+
+Login --> AuthContext : uses
+Signup --> AuthContext : uses
+Admin --> AuthContext : uses
+Navbar --> AuthContext : uses
+Requests --> AuthContext : uses
+
+App --> Home : routes to
+App --> Books : routes to
+App --> DigitalBooks : routes to
+App --> Login : routes to
+App --> Signup : routes to
+App --> Requests : routes to
+App --> Admin : routes to
+App --> RootRedirect : routes to
+
+AuthContext --> FirebaseAuth : uses
+GoogleBooksSection --> GoogleBooksAPI : fetches from
+BookRoutes --> MongoDB : queries
+BookRequestRoutes --> MongoDB : queries
+ConnectionMiddleware --> MongoDB : connects to
+
+@enduml
+

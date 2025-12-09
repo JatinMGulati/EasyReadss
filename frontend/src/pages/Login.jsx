@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { isAdmin } from '../utils/admin'
 import './Auth.css'
 
 function Login() {
@@ -17,11 +18,21 @@ function Login() {
     try {
       setError('')
       setLoading(true)
-      await login(email, password)
+      const userCredential = await login(email, password)
+      
+      // Check if email is verified
+      if (userCredential && userCredential.user && !userCredential.user.emailVerified) {
+        setError('Please verify your email before signing in. A verification email has been sent to your inbox.')
+        setLoading(false)
+        return
+      }
+      
       // Check if user is admin and redirect accordingly
-      const { isAdmin } = await import('../utils/admin')
-      // We need to get the user after login, so we'll check in useEffect or after navigation
-      navigate('/home')
+      if (userCredential && isAdmin(userCredential.user.email)) {
+        navigate('/admin')
+      } else {
+        navigate('/home')
+      }
     } catch (err) {
       let errorMessage = 'Failed to sign in.'
       

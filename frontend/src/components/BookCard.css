@@ -72,21 +72,37 @@
 }
 
 .book-card-preview {
-  background: #4a9eff;
-  color: #ffffff;
+  background: #4fd1c7;
+  color: #1a202c;
   border: none;
   border-radius: 6px;
   padding: 8px 12px;
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
   margin-top: auto;
   flex-shrink: 0;
   width: 100%;
 }
 
 .book-card-preview:hover {
-  background: #3a8eef;
+  background: #38b2ac;
+  transform: translateY(-1px);
+}
+
+.book-card-listen {
+  background: #a78bfa;
+  color: #ffffff;
+}
+
+.book-card-listen:hover {
+  background: #8b5cf6;
+  transform: translateY(-1px);
+}
+
+.book-card-preview-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 

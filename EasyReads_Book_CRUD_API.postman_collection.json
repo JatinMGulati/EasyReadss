@@ -1,0 +1,504 @@
+{
+  "info": {
+    "_postman_id": "easyreads-book-crud-api",
+    "name": "EasyReads Book CRUD API",
+    "description": "Comprehensive API collection for managing books in EasyReads system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Basic CRUD Operations",
+      "item": [
+        {
+          "name": "Get All Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/books?page=1&limit=10&sortBy=createdAt&order=desc",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "genre",
+                  "value": "Fiction",
+                  "disabled": true
+                },
+                {
+                  "key": "search",
+                  "value": "gatsby",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt"
+                },
+                {
+                  "key": "order",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Book by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/books/507f1f77bcf86cd799439011",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "507f1f77bcf86cd799439011"]
+            }
+          }
+        },
+        {
+          "name": "Create Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"The Great Gatsby\",\n  \"author\": \"F. Scott Fitzgerald\",\n  \"ISBN\": \"978-0743273565\",\n  \"image_link\": \"https://via.placeholder.com/300x400?text=Great+Gatsby\",\n  \"amazon_link\": \"https://amazon.com/Great-Gatsby\",\n  \"description\": \"A classic novel of the Jazz Age\",\n  \"genre\": \"Fiction\",\n  \"pages\": 180,\n  \"publishDate\": \"1925-04-10\",\n  \"publisher\": \"Scribner\",\n  \"language\": \"English\",\n  \"price\": 12.99,\n  \"discount\": 10,\n  \"copies\": 5,\n  \"tags\": [\"classic\", \"american-literature\", \"1920s\"]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/books",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books"]
+            }
+          }
+        },
+        {
+          "name": "Update Book (Full)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"The Great Gatsby - Updated\",\n  \"rating\": 4.7,\n  \"copies\": 8,\n  \"featured\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/books/507f1f77bcf86cd799439011",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "507f1f77bcf86cd799439011"]
+            }
+          }
+        },
+        {
+          "name": "Patch Book (Partial)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4.8,\n  \"featured\": true\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/books/507f1f77bcf86cd799439011",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "507f1f77bcf86cd799439011"]
+            }
+          }
+        },
+        {
+          "name": "Delete Book",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/books/507f1f77bcf86cd799439011",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "507f1f77bcf86cd799439011"]
+            }
+          }
+        },
+        {
+          "name": "Delete Multiple Books",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    \"507f1f77bcf86cd799439011\",\n    \"507f1f77bcf86cd799439012\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/books",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Search & Filter",
+      "item": [
+        {
+          "name": "Search Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/search/books?q=gatsby&limit=20",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "search", "books"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "gatsby"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Books by Genre",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/genre/Fiction?page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "genre", "Fiction"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Books by Author",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/author/F.%20Scott%20Fitzgerald?page=1&limit=5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "author", "F. Scott Fitzgerald"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Trending Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/trending?limit=15",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "trending"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Featured Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/featured?limit=8",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "featured"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "8"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Available Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/available?page=1&limit=20",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "available"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Books by Rating",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/rating?minRating=4&maxRating=5&page=1&limit=20",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "rating"],
+              "query": [
+                {
+                  "key": "minRating",
+                  "value": "4"
+                },
+                {
+                  "key": "maxRating",
+                  "value": "5"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Books by Price Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/price-range?minPrice=10&maxPrice=30&page=1&limit=15",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "price-range"],
+              "query": [
+                {
+                  "key": "minPrice",
+                  "value": "10"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "30"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "15"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Books by Year",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/year/1925?page=1&limit=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "year", "1925"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Statistics & Analytics",
+      "item": [
+        {
+          "name": "Get Book Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/stats",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Update Book Rating",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4.5,\n  \"reviewCount\": 250\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/books/507f1f77bcf86cd799439011/rating",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "507f1f77bcf86cd799439011", "rating"]
+            }
+          }
+        },
+        {
+          "name": "Increment Download Count",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/books/507f1f77bcf86cd799439011/increment-downloads",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "books", "507f1f77bcf86cd799439011", "increment-downloads"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Bulk Operations",
+      "item": [
+        {
+          "name": "Bulk Import Books",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"books\": [\n    {\n      \"name\": \"1984\",\n      \"author\": \"George Orwell\",\n      \"ISBN\": \"978-0451524935\",\n      \"image_link\": \"https://via.placeholder.com/300x400?text=1984\",\n      \"amazon_link\": \"https://amazon.com/1984\",\n      \"description\": \"Dystopian novel set in a totalitarian state\",\n      \"genre\": \"Fiction\",\n      \"pages\": 328,\n      \"publishDate\": \"1949-06-08\",\n      \"publisher\": \"Secker & Warburg\",\n      \"price\": 13.99,\n      \"discount\": 5,\n      \"copies\": 8,\n      \"tags\": [\"dystopian\", \"classic\", \"political\"]\n    },\n    {\n      \"name\": \"Animal Farm\",\n      \"author\": \"George Orwell\",\n      \"ISBN\": \"978-0451526342\",\n      \"image_link\": \"https://via.placeholder.com/300x400?text=Animal+Farm\",\n      \"amazon_link\": \"https://amazon.com/Animal-Farm\",\n      \"description\": \"Allegorical novella reflecting events leading up to Stalin's rise\",\n      \"genre\": \"Fiction\",\n      \"pages\": 141,\n      \"publishDate\": \"1945-08-17\",\n      \"publisher\": \"Secker & Warburg\",\n      \"price\": 10.99,\n      \"discount\": 0,\n      \"copies\": 12,\n      \"tags\": [\"allegory\", \"political-satire\", \"classic\"]\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/bulk-import",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "bulk-import"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "health"]
+        }
+      }
+    }
+  ]
+}

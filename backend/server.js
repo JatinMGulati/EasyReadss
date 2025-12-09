@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import authRoutes from './routes/auth.js'
 import adminRoutes from './routes/admin.js'
 import bookRoutes from './routes/routes.js'
+import bookRequestRoutes from './routes/bookRequests.js'
+import aiRoutes from './routes/ai.js'
 import connectToDB from './middleware/connection.js'
 
 dotenv.config()
@@ -27,6 +29,8 @@ app.get('/api/health', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/book-requests', bookRequestRoutes)
+app.use('/api/ai', aiRoutes)
 app.use('/api', bookRoutes)
 
 // Error handling middleware

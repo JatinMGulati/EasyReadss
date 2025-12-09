@@ -6,11 +6,21 @@ import Signup from './pages/Signup'
 import Home from './pages/Home'
 import Books from './pages/Books'
 import DigitalBooks from './pages/DigitalBooks'
+import Requests from './pages/Requests'
 import Admin from './pages/Admin'
+import RootRedirect from './components/RootRedirect'
+import AIAssistant from './components/AIAssistant'
 
 function PrivateRoute({ children }) {
   const { currentUser } = useAuth()
-  return currentUser ? children : <Navigate to="/login" />
+  if (!currentUser) {
+    return <Navigate to="/login" />
+  }
+  // If admin, redirect to admin page only
+  if (isAdmin(currentUser.email)) {
+    return <Navigate to="/admin" />
+  }
+  return children
 }
 
 function AdminRoute({ children }) {
@@ -54,6 +64,14 @@ function AppRoutes() {
         }
       />
       <Route
+        path="/requests"
+        element={
+          <PrivateRoute>
+            <Requests />
+          </PrivateRoute>
+        }
+      />
+      <Route
         path="/admin"
         element={
           <AdminRoute>
@@ -61,7 +79,7 @@ function AppRoutes() {
           </AdminRoute>
         }
       />
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<RootRedirect />} />
     </Routes>
   )
 }
@@ -71,6 +89,7 @@ function App() {
     <AuthProvider>
       <Router>
         <AppRoutes />
+        <AIAssistant />
       </Router>
     </AuthProvider>
   )

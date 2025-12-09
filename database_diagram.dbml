@@ -1,0 +1,282 @@
+// EasyReads Database Diagram
+// Docs: https://dbdiagram.io/docs
+// MongoDB Collections with Relationships
+
+//----------------------------------------------//
+// Core Book Collections
+//----------------------------------------------//
+
+Table books {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Unique identifier across all collections']
+  author varchar [not null]
+  image_link varchar [not null]
+  amazon_link varchar [not null]
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+Table ebooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  image_link varchar [not null]
+  amazon_link varchar
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+Table audiobooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  narrator varchar [note: 'Audio book narrator name']
+  image_link varchar [not null]
+  amazon_link varchar
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+//----------------------------------------------//
+// Category Book Collections
+//----------------------------------------------//
+
+Table fictionbooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  image_link varchar [not null]
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+Table sciencebooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  image_link varchar [not null]
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+Table biographybooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  image_link varchar [not null]
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+Table fantasybooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  image_link varchar [not null]
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+Table historybooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  image_link varchar [not null]
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+Table technologybooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  image_link varchar [not null]
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+Table romancebooks {
+  _id ObjectId [pk]
+  name varchar [not null]
+  ISBN varchar [not null, unique, note: 'Logical reference to books.ISBN']
+  author varchar [not null]
+  image_link varchar [not null]
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    ISBN [unique, name: 'idx_isbn']
+    _id [pk]
+  }
+}
+
+//----------------------------------------------//
+// Book Requests Collection
+//----------------------------------------------//
+
+Table bookrequests {
+  _id ObjectId [pk]
+  bookName varchar [not null]
+  author varchar [not null]
+  ISBN varchar [note: 'Optional logical reference to books.ISBN when approved']
+  requestedBy varchar [not null, note: 'Firebase user email']
+  requestedByUid varchar [not null, note: 'Firebase user UID - logical reference to Firebase Auth']
+  status varchar [not null, default: 'pending', note: 'pending, approved, or rejected']
+  adminNotes varchar
+  requestedAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    _id [pk]
+    requestedByUid [name: 'idx_user_uid']
+    status [name: 'idx_status']
+    ISBN [name: 'idx_isbn']
+  }
+}
+
+//----------------------------------------------//
+// User Collection (Optional)
+//----------------------------------------------//
+
+Table users {
+  _id ObjectId [pk]
+  username varchar [not null, unique, note: 'Unique username for MongoDB user storage']
+  password varchar [not null, note: 'Bcrypt hashed password']
+  createdAt datetime [default: `now()`]
+  updatedAt datetime [default: `now()`]
+  
+  Indexes {
+    username [unique, name: 'idx_username']
+    _id [pk]
+  }
+}
+
+//----------------------------------------------//
+// Relationships with Types
+//----------------------------------------------//
+
+// One-to-One: Books to E-Books (same ISBN, different format)
+Ref: ebooks.ISBN - books.ISBN
+
+// One-to-One: Books to Audiobooks (same ISBN, different format)
+Ref: audiobooks.ISBN - books.ISBN
+
+// One-to-Many: Books to Category Collections
+// One book (by ISBN) can belong to multiple categories
+Ref: fictionbooks.ISBN > books.ISBN
+Ref: sciencebooks.ISBN > books.ISBN
+Ref: biographybooks.ISBN > books.ISBN
+Ref: fantasybooks.ISBN > books.ISBN
+Ref: historybooks.ISBN > books.ISBN
+Ref: technologybooks.ISBN > books.ISBN
+Ref: romancebooks.ISBN > books.ISBN
+
+// Many-to-One: Book Requests to Books
+// Many book requests can reference one book via ISBN when approved
+Ref: bookrequests.ISBN > books.ISBN
+
+//----------------------------------------------//
+// Notes and Documentation
+//----------------------------------------------//
+
+Note books {
+  'Main Books Collection - Stores physical books with Amazon purchase links. ISBN is unique identifier. Has One-to-One with ebooks and audiobooks. Has One-to-Many with all category collections.'
+}
+
+Note ebooks {
+  'E-Books Collection - Digital book format. Can be linked to physical books via ISBN. amazon_link is optional. One-to-One relationship with books.'
+}
+
+Note audiobooks {
+  'Audiobooks Collection - Audio format books with narrator information. Can reference same book via ISBN. One-to-One relationship with books.'
+}
+
+Note fictionbooks {
+  'Category Collections - Fiction, Science, Biography, Fantasy, History, Technology, Romance. All have identical schema. Books can belong to multiple categories. Many-to-One relationship with books.'
+}
+
+Note sciencebooks {
+  'Science category books - Many-to-One relationship with books via ISBN.'
+}
+
+Note biographybooks {
+  'Biography category books - Many-to-One relationship with books via ISBN.'
+}
+
+Note fantasybooks {
+  'Fantasy category books - Many-to-One relationship with books via ISBN.'
+}
+
+Note historybooks {
+  'History category books - Many-to-One relationship with books via ISBN.'
+}
+
+Note technologybooks {
+  'Technology category books - Many-to-One relationship with books via ISBN.'
+}
+
+Note romancebooks {
+  'Romance category books - Many-to-One relationship with books via ISBN.'
+}
+
+Note bookrequests {
+  'Book Requests Collection - User-submitted requests for unavailable books. Status: pending, approved, or rejected. Tracks requester via Firebase UID. ISBN is optional. Many-to-One relationship with books when approved.'
+}
+
+Note users {
+  'User Collection (Optional) - MongoDB user storage. Primary authentication handled by Firebase Auth. Use for extended user profiles. Logical connection to bookrequests via Firebase UID.'
+}

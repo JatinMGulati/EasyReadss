@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import BookCard from './BookCard'
 import './GoogleBooksSection.css'
 
 const MAX_RESULTS = 12
@@ -70,38 +71,17 @@ function GoogleBooksSection({ title, type = 'ebooks' }) {
               No {title.toLowerCase()} available
             </div>
           ) : (
-            books.map((book, index) => (
-              <div key={book.id || index} className="book-card">
-                <div className="book-card-image-container">
-                  <img
-                    src={book.volumeInfo?.imageLinks?.thumbnail || 'https://via.placeholder.com/150'}
-                    alt={book.volumeInfo?.title || 'Book'}
-                    className="book-card-image"
-                    onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/150'
-                    }}
-                  />
-                </div>
-                <div className="book-card-content">
-                  <h3 className="book-card-title">
-                    {book.volumeInfo?.title || 'Untitled'}
-                  </h3>
-                  <p className="book-card-author">
-                    {book.volumeInfo?.authors?.join(', ') || 'Unknown Author'}
-                  </p>
-                  {book.volumeInfo?.previewLink && (
-                    <a
-                      href={book.volumeInfo.previewLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="book-card-preview-link"
-                    >
-                      Preview
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))
+            books.map((book, index) => {
+              const bookData = {
+                name: book.volumeInfo?.title,
+                author: book.volumeInfo?.authors?.join(', '),
+                image_link: book.volumeInfo?.imageLinks?.thumbnail,
+                previewLink: book.volumeInfo?.previewLink,
+                volumeInfo: book.volumeInfo, // Keep for BookCard compatibility
+                type: type === 'audiobooks' ? 'audiobook' : 'ebook'
+              }
+              return <BookCard key={book.id || index} book={bookData} type={type === 'audiobooks' ? 'audiobook' : 'ebook'} />
+            })
           )}
         </div>
       </div>

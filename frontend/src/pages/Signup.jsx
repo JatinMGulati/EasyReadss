@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { isAdmin } from '../utils/admin'
 import './Auth.css'
 
 function Signup() {
@@ -27,8 +28,14 @@ function Signup() {
     try {
       setError('')
       setLoading(true)
-      await signup(email, password, username)
-      navigate('/home')
+      const userCredential = await signup(email, password, username)
+      // Show verification message
+      if (userCredential && userCredential.user) {
+        setError('')
+        alert('Verification email sent! Please check your email and verify your account before signing in.')
+        // Don't redirect immediately, let user verify email first
+        navigate('/login')
+      }
     } catch (err) {
       let errorMessage = 'Failed to create an account.'
       

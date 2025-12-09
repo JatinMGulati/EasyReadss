@@ -137,29 +137,36 @@
   text-overflow: ellipsis;
 }
 
-.digital-book-link {
-  display: block;
+.digital-book-button {
   margin-top: 8px;
-  text-decoration: none;
-  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
   font-weight: 500;
-  transition: color 0.2s ease;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  width: 100%;
 }
 
-.ebook-link {
-  color: #4fd1c7;
+.ebook-button {
+  background: #4fd1c7;
+  color: #1a202c;
 }
 
-.ebook-link:hover {
-  color: #38b2ac;
+.ebook-button:hover {
+  background: #38b2ac;
+  transform: translateY(-1px);
 }
 
-.audiobook-link {
-  color: #a78bfa;
+.audiobook-button {
+  background: #a78bfa;
+  color: #ffffff;
 }
 
-.audiobook-link:hover {
-  color: #8b5cf6;
+.audiobook-button:hover {
+  background: #8b5cf6;
+  transform: translateY(-1px);
 }
 
 .digital-load-more-container {

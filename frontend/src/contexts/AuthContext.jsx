@@ -3,7 +3,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  sendEmailVerification
 } from 'firebase/auth'
 import { auth } from '../config/firebase'
 
@@ -17,18 +18,22 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  function signup(email, password, username) {
-    return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Store username in user profile if needed
-        // Note: Firebase Auth doesn't store username by default
-        // You might want to store it in Firestore
-        return userCredential
-      })
+  async function signup(email, password, username) {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    // Send email verification
+    if (userCredential.user) {
+      await sendEmailVerification(userCredential.user)
+    }
+    return userCredential
   }
 
-  function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+  async function login(email, password) {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    // Check if email is verified, if not, send verification email
+    if (userCredential.user && !userCredential.user.emailVerified) {
+      await sendEmailVerification(userCredential.user)
+    }
+    return userCredential
   }
 
   function logout() {

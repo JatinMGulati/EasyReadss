@@ -1,0 +1,90 @@
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: easyreads-mongodb
+    restart: unless-stopped
+    ports:
+      - "27018:27017"  # Changed host port to 27018 to avoid conflict with local MongoDB
+    environment:
+      MONGO_INITDB_DATABASE: easyreads
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - easyreads-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: easyreads-backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/easyreads
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID:-}
+      - FIREBASE_PRIVATE_KEY=${FIREBASE_PRIVATE_KEY:-}
+      - FIREBASE_CLIENT_EMAIL=${FIREBASE_CLIENT_EMAIL:-}
+      - FIREBASE_SERVICE_ACCOUNT_KEY=${FIREBASE_SERVICE_ACCOUNT_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ADMIN_EMAILS=${ADMIN_EMAILS:-}
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - easyreads-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend React App
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: easyreads-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:5000/api
+      - VITE_FIREBASE_API_KEY=${VITE_FIREBASE_API_KEY:-}
+      - VITE_FIREBASE_AUTH_DOMAIN=${VITE_FIREBASE_AUTH_DOMAIN:-}
+      - VITE_FIREBASE_PROJECT_ID=${VITE_FIREBASE_PROJECT_ID:-}
+      - VITE_FIREBASE_STORAGE_BUCKET=${VITE_FIREBASE_STORAGE_BUCKET:-}
+      - VITE_FIREBASE_MESSAGING_SENDER_ID=${VITE_FIREBASE_MESSAGING_SENDER_ID:-}
+      - VITE_FIREBASE_APP_ID=${VITE_FIREBASE_APP_ID:-}
+      - VITE_GOOGLE_API_KEY=${VITE_GOOGLE_API_KEY:-}
+      - VITE_ADMIN_EMAILS=${VITE_ADMIN_EMAILS:-}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - easyreads-network
+
+# Named volumes for data persistence
+volumes:
+  mongodb_data:
+    driver: local
+
+# Network for service communication
+networks:
+  easyreads-network:
+    driver: bridge
+

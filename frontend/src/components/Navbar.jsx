@@ -17,6 +17,33 @@ function Navbar() {
     }
   }
 
+  // If admin, show only admin link
+  if (userIsAdmin) {
+    return (
+      <nav className="navbar">
+        <div className="navbar-container">
+          <Link to="/admin" className="navbar-logo">
+            EasyReads Admin
+          </Link>
+          <div className="navbar-menu">
+            <Link to="/admin" className="navbar-link admin-link">
+              Admin Dashboard
+            </Link>
+            {currentUser && (
+              <div className="navbar-user">
+                <span className="navbar-welcome">Welcome, {currentUser.email}</span>
+                <button onClick={handleLogout} className="navbar-logout">
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+    )
+  }
+
+  // Regular user navbar
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -33,11 +60,9 @@ function Navbar() {
           <Link to="/digital-books" className="navbar-link">
             Digital Books
           </Link>
-          {userIsAdmin && (
-            <Link to="/admin" className="navbar-link admin-link">
-              Admin
-            </Link>
-          )}
+          <Link to="/requests" className="navbar-link">
+            Requests
+          </Link>
           {currentUser && (
             <div className="navbar-user">
               <span className="navbar-welcome">Welcome, {currentUser.email}</span>

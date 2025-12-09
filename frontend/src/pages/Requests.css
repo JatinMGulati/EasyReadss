@@ -1,0 +1,261 @@
+.requests-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6e 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.requests-main {
+  flex: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 48px 24px;
+}
+
+.requests-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.requests-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.requests-title {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.requests-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 18px;
+  margin-bottom: 24px;
+}
+
+.requests-add-btn {
+  background: #4a9eff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.requests-add-btn:hover {
+  background: #3a8eef;
+  transform: translateY(-2px);
+}
+
+.requests-alert {
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.requests-error {
+  background: rgba(244, 67, 54, 0.2);
+  color: #ffcdd2;
+  border: 1px solid rgba(244, 67, 54, 0.5);
+}
+
+.requests-success {
+  background: rgba(76, 175, 80, 0.2);
+  color: #c8e6c9;
+  border: 1px solid rgba(76, 175, 80, 0.5);
+}
+
+.requests-form-container {
+  background: rgba(30, 40, 50, 0.95);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.requests-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group input {
+  background: rgba(40, 50, 60, 0.8);
+  border: 1px solid rgba(74, 158, 255, 0.3);
+  border-radius: 6px;
+  padding: 12px;
+  color: #ffffff;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.requests-submit-btn {
+  background: #4a9eff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.requests-submit-btn:hover:not(:disabled) {
+  background: #3a8eef;
+  transform: translateY(-2px);
+}
+
+.requests-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.requests-list {
+  margin-top: 32px;
+}
+
+.requests-list-title {
+  color: #4a9eff;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.requests-loading,
+.requests-empty {
+  text-align: center;
+  padding: 48px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+}
+
+.requests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.request-card {
+  background: rgba(30, 40, 50, 0.95);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.request-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.request-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.request-book-name {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.request-status {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #ffffff;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.request-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.request-author,
+.request-isbn,
+.request-date {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  margin: 0;
+}
+
+.request-author strong,
+.request-isbn strong,
+.request-date strong {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.request-notes {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.request-notes strong {
+  color: #4a9eff;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.request-notes p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .requests-main {
+    padding: 32px 16px;
+  }
+
+  .requests-title {
+    font-size: 28px;
+  }
+
+  .requests-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .request-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+

@@ -98,14 +98,12 @@ function DigitalBooks() {
                           {book.volumeInfo?.authors?.join(", ") || "Unknown Author"}
                         </p>
                         {book.volumeInfo?.previewLink && (
-                          <a
-                            href={book.volumeInfo.previewLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="digital-book-link ebook-link"
+                          <button
+                            onClick={() => window.open(book.volumeInfo.previewLink, '_blank', 'noopener,noreferrer')}
+                            className="digital-book-button ebook-button"
                           >
                             Preview
-                          </a>
+                          </button>
                         )}
                       </div>
                     </div>
@@ -150,14 +148,12 @@ function DigitalBooks() {
                           {book.volumeInfo?.authors?.join(", ") || "Unknown Author"}
                         </p>
                         {book.volumeInfo?.previewLink && (
-                          <a
-                            href={book.volumeInfo.previewLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="digital-book-link audiobook-link"
+                          <button
+                            onClick={() => window.open(book.volumeInfo.previewLink, '_blank', 'noopener,noreferrer')}
+                            className="digital-book-button audiobook-button"
                           >
                             Listen
-                          </a>
+                          </button>
                         )}
                       </div>
                     </div>
